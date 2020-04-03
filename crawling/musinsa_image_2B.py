@@ -17,7 +17,7 @@ parser.add_argument(
     "--all_category",
     type=str,
     nargs="+",
-    help="category which you want to crawl  >  상의  아우터  원피스  바지  스커트  가방  \n스니커즈  신발  시계  모자  스포츠용품  \n레그웨어속옷  안경  액세서리  디지털테크  \n생활취미예술  뷰티  반려동물  책음악티켓",
+    help="category which you want to crawl  >  상의  아우터  원피스  바지  스커트  가방  스니커즈  신발  시계  모자  스포츠용품  레그웨어속옷  안경  액세서리  디지털테크  생활취미예술  뷰티  반려동물  책음악티켓",
 )
 parser.add_argument(
     "-f", "--folder_path", type=str, help="where to store crawled image"
@@ -59,48 +59,6 @@ class musinsa_crawler:
             category[big_cat_name] = cat
 
         return category
-
-    # def driver_start(self, driver_path=None):
-    #     if driver_path == None:
-    #         driver_path = "/Users/seungsu/Desktop/YBIGTA/chromedriver.exe"
-    #     chrome_options = webdriver.ChromeOptions()
-    #     chrome_options.add_argument("window-size=1920x1080")
-    #     chrome_options.add_argument("headless")
-    #     try:
-    #         self.driver = webdriver.Chrome(driver_path, options=chrome_options)
-    #     except:
-    #         print("\x1b[1;31mError : You should give driver_path option\x1b[1;m")
-    #     self.driver.implicitly_wait(3)
-
-    # def get_category_data_S(self):
-    #     """
-    #     <Get Musinsa Category Data>
-    #     """
-    #     self.driver.get("https://store.musinsa.com/app/")
-    #     all_nav = self.driver.find_element_by_css_selector("nav.nav_menu")
-    #     navs = all_nav.find_elements_by_css_selector("div.nav_category")
-    #     category = {}
-    #     for nav in navs[1:]:
-    #         cat = {}
-    #         big = nav.find_element_by_css_selector(
-    #             "div.nav_menu_title"
-    #         ).find_element_by_css_selector("a")
-    #         big.click()
-    #         big_cat_name = big.find_element_by_css_selector(
-    #             "strong.title"
-    #         ).text.replace("/", "")
-    #         ll = nav.find_element_by_css_selector("div.item_sub_menu")
-    #         uls = ll.find_elements_by_css_selector("ul")
-    #         for ul in uls:
-    #             al = ul.find_elements_by_css_selector("li")
-    #             for a in al:
-    #                 m = a.find_element_by_css_selector("a")
-    #                 h = m.get_attribute("href")
-    #                 exp = re.compile("[가-힣\s/]*")
-    #                 title = exp.findall(m.text)[0].strip(" ").replace("/", " ")
-    #                 cat[title] = h
-    #         category[big_cat_name] = cat
-    #     return category
 
     def check_directory(self, category_name):
         """
@@ -150,7 +108,7 @@ class musinsa_crawler:
             image = Image.open(
                 f"{self.folder_path}/{category_name}/{category_name}_{sub_name}_{id}.png"
             )
-            resize_img = image.resize((125, 125))
+            resize_img = image.resize((128, 128))
             resize_img.save(
                 f"{self.folder_path}/{category_name}/{category_name}_{sub_name}_{id}.png"
             )
