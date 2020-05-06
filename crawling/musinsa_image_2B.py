@@ -100,6 +100,7 @@ class musinsa_crawler:
             a = li.find("a", {"class": "img-block"})
             id = a["href"].lstrip("/app/product/detail/").rstrip("/0")
             img = "http:" + a.find("img")["data-original"]
+            # img = "http:" + a.find("img")["data-original"][:-7] + "500.jpg"
             image = urllib.request.urlretrieve(
                 img,
                 f"{self.folder_path}/{category_name}/{category_name}_{sub_name}_{id}.png",

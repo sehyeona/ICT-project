@@ -15,7 +15,8 @@ from keras.models import Model
 from keras import backend as K
 from keras.optimizers import Adam
 from keras.callbacks import ModelCheckpoint
-from keras.utils import plot_model
+
+# from keras.utils import plot_model
 
 from utils.callbacks import CustomCallback, step_decay_schedule
 
@@ -190,7 +191,7 @@ class VariationalAutoencoder:
                 f,
             )
 
-        self.plot_model(folder)
+        # self.plot_model(folder)
 
     def load_weights(self, filepath):
         self.model.load_weights(filepath)
@@ -280,23 +281,22 @@ class VariationalAutoencoder:
             steps_per_epoch=steps_per_epoch,
         )
 
-    def plot_model(self, run_folder):
-        plot_model(
-            self.model,
-            to_file=os.path.join(run_folder, "viz/model.png"),
-            show_shapes=True,
-            show_layer_names=True,
-        )
-        plot_model(
-            self.encoder,
-            to_file=os.path.join(run_folder, "viz/encoder.png"),
-            show_shapes=True,
-            show_layer_names=True,
-        )
-        plot_model(
-            self.decoder,
-            to_file=os.path.join(run_folder, "viz/decoder.png"),
-            show_shapes=True,
-            show_layer_names=True,
-        )
-
+    # def plot_model(self, run_folder):
+    #     plot_model(
+    #         self.model,
+    #         to_file=os.path.join(run_folder, "viz/model.png"),
+    #         show_shapes=True,
+    #         show_layer_names=True,
+    #     )
+    #     plot_model(
+    #         self.encoder,
+    #         to_file=os.path.join(run_folder, "viz/encoder.png"),
+    #         show_shapes=True,
+    #         show_layer_names=True,
+    #     )
+    #     plot_model(
+    #         self.decoder,
+    #         to_file=os.path.join(run_folder, "viz/decoder.png"),
+    #         show_shapes=True,
+    #         show_layer_names=True,
+    #     )
