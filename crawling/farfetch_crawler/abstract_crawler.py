@@ -12,7 +12,6 @@ from selenium import webdriver
 class Clothes_Crawler:
     def __init__(self, folder_path="."):
         self.driver = self.getDriver()
-        print("ancestor")
 
         self.num = 1
 
@@ -28,8 +27,8 @@ class Clothes_Crawler:
         self.folder_path = folder_path
 
     def getDriver(self):
-        # path = "/root/chrome_driver/chromedriver"
-        path_window = r"/Users/seungsu/Desktop/YBIGTA/chromedriver.exe"
+        path = "/root/chrome_driver/chromedriver"
+        # path_window = r"/Users/seungsu/Desktop/YBIGTA/chromedriver.exe"
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--window-size=2400,1080")
         # chrome_options.add_argument("headless")
@@ -40,22 +39,14 @@ class Clothes_Crawler:
         return self.driver
 
     # make db id
-    def make_id(self, num, shop="10", category="00"):
+    def make_id(self, num, version="10", category="00"):
         """
-        shop     ; 29cm     : 11
-        shop     ; musinsa  : 12
-        shop     ; farfetch : 13
-
         category ; top      : 01
-        category ; shirts   : 02
-        category ; knit     : 03
-        category ; pants    : 04
-        category ; shoes    : 05
-        category ; outer    : 06
-        category ; bags     : 07
+        category ; pants    : 02
+        category ; shoes    : 03
         """
 
-        item_id = shop + category + str(num).rjust(6, "0")
+        item_id = version + category + str(num).rjust(8, "0")
         return item_id
 
     def getItemList(self):

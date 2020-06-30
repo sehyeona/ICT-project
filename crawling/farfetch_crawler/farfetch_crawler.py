@@ -8,6 +8,7 @@ import urllib.request
 from selenium import webdriver
 from argparse import ArgumentParser
 import abstract_crawler
+from tqdm import tqdm
 
 
 class farfetch_crawler(abstract_crawler.Clothes_Crawler):
@@ -159,13 +160,12 @@ class farfetch_crawler(abstract_crawler.Clothes_Crawler):
         for p in range(1, int(page + 1)):
             # 페이지 item리스트 뽑기
             itemList = self.getItemList(sub_category, p)
-
+            print(f"{sub_category} > {p} page")
             # 개별 아이템 json화
-            for item in itemList:
+            for item in tqdm(itemList):
                 item_id = self.make_id(num, "13", "01")
                 a = self.crawl_item(item["href"])
                 item_group[item_id] = a
-                print(a)
                 num += 1
 
         # json으로 저장
@@ -184,4 +184,12 @@ class farfetch_crawler(abstract_crawler.Clothes_Crawler):
 if __name__ == "__main__":
     crawler = farfetch_crawler()
 
-    crawler.crawl_category("knit", page=1, save=True)
+    crawler.crawl_category("knit", page=63, save=True)
+    crawler.crawl_category("denim", page=18, save=True)
+    crawler.crawl_category("shirts", page=42, save=True)
+    crawler.crawl_category("shorts", page=15, save=True)
+    crawler.crawl_category("jacket", page=51, save=True)
+    crawler.crawl_category("coat", page=10, save=True)
+    crawler.crawl_category("t-shirt", page=58, save=True)
+    crawler.crawl_category("pants", page=41, save=True)
+    crawler.crawl_category("polo-shirt", page=17, save=True)
