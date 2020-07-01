@@ -7,7 +7,7 @@ from PIL import Image
 import requests
 import urllib.request
 from selenium import webdriver
-
+from pyvirtualdisplay import Display
 
 class Clothes_Crawler:
     def __init__(self, folder_path="."):
@@ -27,13 +27,15 @@ class Clothes_Crawler:
         self.folder_path = folder_path
 
     def getDriver(self):
-        path = "/root/chrome_driver/chromedriver"
+        self.display = Display(visible=0, size = (2400, 1080))
+        self.display.start()
+        path = "/usr/local/bin/chromedriver"
         # path_window = r"/Users/seungsu/Desktop/YBIGTA/chromedriver.exe"
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--window-size=2400,1080")
         # chrome_options.add_argument("headless")
 
-        self.driver = webdriver.Chrome(path_window, options=chrome_options)
+        self.driver = webdriver.Chrome(path, options=chrome_options)
         self.driver.implicitly_wait(3)
 
         return self.driver

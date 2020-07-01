@@ -28,6 +28,19 @@ class farfetch_crawler(abstract_crawler.Clothes_Crawler):
             "polo-shirt",
         ]
 
+        self.category_id = {
+            "knit": "01",
+            "denim": "02",
+            "shirts": "01",
+            "shorts": "02",
+            "suit": "04",
+            "jacket": "01",
+            "coat": "04",
+            "t-shirts": "01",
+            "pants": "02",
+            "polo-shirt": "01"
+        }
+
         self.category_url_list = {
             "knit": {
                 "category": "knit",
@@ -163,21 +176,24 @@ class farfetch_crawler(abstract_crawler.Clothes_Crawler):
             print(f"{sub_category} > {p} page")
             # 개별 아이템 json화
             for item in tqdm(itemList):
-                item_id = self.make_id(num, "13", "01")
-                a = self.crawl_item(item["href"])
-                item_group[item_id] = a
-                num += 1
+                try:
+                    item_id = self.make_id(num, "10", self.category_id[sub_category])
+                    a = self.crawl_item(item["href"])
+                    item_group[item_id] = a
+                    num += 1
+                except:
+                    print("pass")
+                    continue
 
-        # json으로 저장
-        if save == True:
-            # path 설정
-            if path == None:
-                path = f"./itemList.json"
-            else:
-                path = path + "/itemList.json"
-            with open(path, "w", encoding="utf-8") as make_file:
-                json.dump(item_group, make_file, ensure_ascii=False, indent="\t")
-
+            # json으로 저장
+            if save == True:
+                # path 설정
+                if path == None:
+                    path = f"/home/ubuntu/data/ff_{sub_category}.json"
+                else:
+                    path = path + "~/{sub_category}.json"
+                with open(path, "w", encoding="utf-8") as make_file:
+                    json.dump(item_group, make_file, ensure_ascii=False, indent="\t")
         return item_group
 
 
@@ -185,11 +201,11 @@ if __name__ == "__main__":
     crawler = farfetch_crawler()
 
     crawler.crawl_category("knit", page=63, save=True)
-    crawler.crawl_category("denim", page=18, save=True)
-    crawler.crawl_category("shirts", page=42, save=True)
-    crawler.crawl_category("shorts", page=15, save=True)
-    crawler.crawl_category("jacket", page=51, save=True)
-    crawler.crawl_category("coat", page=10, save=True)
-    crawler.crawl_category("t-shirt", page=58, save=True)
-    crawler.crawl_category("pants", page=41, save=True)
-    crawler.crawl_category("polo-shirt", page=17, save=True)
+    #crawler.crawl_category("denim", page=18, save=True)
+    #crawler.crawl_category("shirts", page=42, save=True)
+    #crawler.crawl_category("shorts", page=15, save=True)
+    #crawler.crawl_category("jacket", page=51, save=True)
+    #crawler.crawl_category("coat", page=10, save=True)
+    #crawler.crawl_category("t-shirt", page=58, save=True)
+    #crawler.crawl_category("pants", page=41, save=True)
+    #crawler.crawl_category("polo-shirt", page=17, save=True)
