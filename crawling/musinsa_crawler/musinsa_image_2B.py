@@ -5,8 +5,9 @@ from PIL import Image
 import requests
 import urllib.request
 from bs4 import BeautifulSoup as bs
-from selenium import webdriver
+# from selenium import webdriver
 from argparse import ArgumentParser
+import concurrent.futures
 
 
 # option
@@ -157,13 +158,24 @@ class musinsa_crawler:
         else:
             for category_name in categories:
                 self.check_directory(category_name=category_name)
-                for sub_category_name in self.category[category_name].keys():
-                    self.crawl_SubCategory(
-                        main=category_name, sub=sub_category_name, page=page
-                    )
-                    print(
-                        f"\x1b[1;32mCOMPLETE\x1b[1;m\t{category_name} > {sub_category_name}"
-                    )
+                excutors_num = len(self.category[category_name])
+                with concurrent.futures.ThreadPoolExecutor(excutors_num) as pool:
+                    futures_workers = []
+                    for sub_category_name in self.category[category_name].keys():
+                        futures_workers.append(pool.submit(
+                            self.crawl_SubCategory,
+                            category_name,
+                            sub_category_name,
+                            page=page
+                        ))
+                        # self.crawl_SubCategory(
+                        #     main=category_name, sub=sub_category_name, page=page
+                        # )
+                        print(f"\x1b[1;32mSTART\x1b[1;m\t{category_name} > {sub_category_name}")
+                    for worker in concurrent.futures.as_completed(futures_workers):
+                        worker.result()
+                    
+                     
 
 
 if __name__ == "__main__":
